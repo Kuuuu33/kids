@@ -1,0 +1,17 @@
+{
+  "name": "あそぼ",
+  "short_name": "あそぼ",
+  "description": "4歳の子どもがひとりで遊べる、さわるだけのブラウザゲーム。広告なし・課金なし・通信なし。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#a9e4ff",
+  "theme_color": "#a9e4ff",
+  "lang": "ja",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

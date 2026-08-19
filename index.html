@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<!--
+  あそぼ — くぅ
+  https://kuuuu33.github.io/kids/
+
+  Copyright (c) 2026 くぅ. All Rights Reserved.
+
+  本サイトおよび掲載作品の著作権は制作者に帰属します。
+  制作者の許諾なく、複製・改変・再配布・再公開すること、
+  および自身の作品として公開することを禁じます。
+
+  Unauthorized copying, modification, redistribution, or republication
+  of this site, in whole or in part, is prohibited.
+
+  お問い合わせ: https://github.com/kuuuu33
+-->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>あそぼ — 4さいからの ゲーム</title>
+<meta name="description" content="4歳の子どもがひとりで遊べる、ブラウザゲームのページ。広告なし・課金なし・通信なし。文字が読めなくても、さわるだけで遊べます。">
+<meta name="theme-color" content="#a9e4ff">
+<link rel="canonical" href="https://kuuuu33.github.io/kids/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kuuuu33.github.io/kids/">
+<meta property="og:title" content="あそぼ — 4さいからの ゲーム">
+<meta property="og:description" content="文字が読めなくても、さわるだけで遊べる。広告なし・課金なし・通信なしの、子ども向けブラウザゲーム。">
+<meta property="og:image" content="https://kuuuu33.github.io/kids/assets/ogp.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="あそぼ — 4さいからの ゲーム">
+<meta name="twitter:description" content="文字が読めなくても、さわるだけで遊べる。広告なし・課金なし・通信なしの、子ども向けブラウザゲーム。">
+<meta name="twitter:image" content="https://kuuuu33.github.io/kids/assets/ogp.jpg">
+
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+<link rel="icon" href="assets/icon-512.png" sizes="512x512">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="あそぼ">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #4a3b2a;
+    --ink-soft: #7c6b56;
+    --cream: #fffdf7;
+    --line: rgba(122,90,53,.18);
+  }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    min-height: 100%;
+    font-family: "Hiragino Maru Gothic ProN", "ヒラギノ丸ゴ ProN", "Hiragino Sans", system-ui, sans-serif;
+    color: var(--ink);
+    background: #cdefb8;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+  }
+
+  /* 背景は固定レイヤーに置く（iOS Safari は background-attachment:fixed が効かない） */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(#a9e4ff 0%, #cdf1ff 30%, #e6f9e2 58%, #cdefb8 100%);
+  }
+
+  .wrap {
+    width: min(100% - 32px, 900px);
+    margin-inline: auto;
+    padding-top: max(env(safe-area-inset-top), 8px);
+  }
+
+  /* ================= ヒーロー ================= */
+  .hero { text-align: center; padding: 34px 0 22px; position: relative; }
+
+  .hero .sun {
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(255,244,180,.9) 0%, rgba(255,244,180,0) 62%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  h1 {
+    font-size: clamp(44px, 13vw, 84px);
+    font-weight: 800;
+    letter-spacing: .1em;
+    line-height: 1.1;
+    text-shadow: 0 3px 0 #fff, 0 6px 14px rgba(90,120,60,.18);
+  }
+  h1 .rb {
+    display: inline-block;
+    width: .76em;
+    margin-right: .16em;
+    vertical-align: -.02em;
+    animation: sway 3.6s ease-in-out infinite;
+  }
+  h1 .rb svg { width: 100%; height: auto; display: block; }
+  @keyframes sway {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-7px) scale(1.05); }
+  }
+
+  .sub {
+    margin-top: 10px;
+    font-size: clamp(15px, 4.2vw, 20px);
+    font-weight: 700;
+    color: var(--ink-soft);
+    letter-spacing: .06em;
+  }
+
+  /* ================= カード ================= */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    padding-bottom: 40px;
+  }
+
+  .card {
+    -webkit-appearance: none;
+    appearance: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: min(56vh, 400px);
+    padding: 26px 18px;
+    font: inherit;
+    color: inherit;
+    text-decoration: none;
+    text-align: center;
+    background: var(--cream);
+    border: 5px solid #fff;
+    border-radius: 34px;
+    box-shadow: 0 10px 0 rgba(122,90,53,.16), 0 18px 34px rgba(90,120,60,.2);
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease;
+    animation: float 4.6s ease-in-out infinite;
+  }
+  .card:nth-child(2n) { animation-delay: -2.3s; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-7px); }
+  }
+  .card:active {
+    transform: translateY(7px);
+    box-shadow: 0 3px 0 rgba(122,90,53,.16), 0 8px 16px rgba(90,120,60,.2);
+    animation: none;
+  }
+  .card:focus-visible { outline: 4px solid #ff9b3d; outline-offset: 4px; }
+
+  .card--tamago { background: linear-gradient(170deg, #fffdf2 0%, #ffeec9 100%); }
+
+  .face {
+    font-size: clamp(88px, 26vw, 150px);
+    line-height: 1;
+    filter: drop-shadow(0 8px 10px rgba(122,90,53,.22));
+  }
+  .card:active .face { animation: pop .35s ease; }
+  @keyframes pop {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.18) rotate(-7deg); }
+    100% { transform: scale(1); }
+  }
+
+  .name {
+    font-size: clamp(24px, 7vw, 34px);
+    font-weight: 800;
+    letter-spacing: .06em;
+  }
+
+  .go {
+    margin-top: 4px;
+    padding: 9px 26px;
+    font-size: clamp(16px, 4.6vw, 20px);
+    font-weight: 800;
+    letter-spacing: .1em;
+    color: #fff;
+    background: #ff9b3d;
+    border-radius: 999px;
+    box-shadow: 0 4px 0 #e07a1c;
+  }
+
+  /* まだ出ていないやつ */
+  .card--soon {
+    background: rgba(255,255,255,.42);
+    border-color: rgba(255,255,255,.7);
+    border-style: dashed;
+    box-shadow: 0 8px 0 rgba(122,90,53,.08), 0 14px 26px rgba(90,120,60,.12);
+  }
+  .card--soon .face { opacity: .75; }
+  .card--soon .name { color: var(--ink-soft); }
+  .card--soon.wig { animation: wig .5s ease; }
+  @keyframes wig {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-3deg); }
+    75% { transform: rotate(3deg); }
+  }
+
+  /* ================= おうちのかたへ ================= */
+  .parents {
+    margin-top: 10px;
+    padding: 30px 24px 34px;
+    background: rgba(255,255,255,.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 30px 30px 0 0;
+    box-shadow: 0 -6px 26px rgba(90,120,60,.14);
+  }
+
+  .parents h2 {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+    border-bottom: 2px solid var(--line);
+  }
+  .parents h3 {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    margin: 30px 0 10px;
+  }
+
+  .parents p, .parents li {
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: #5c4a35;
+  }
+  .parents ul { list-style: none; }
+  .parents li { padding-left: 20px; position: relative; }
+  .parents li::before {
+    content: "";
+    position: absolute;
+    left: 4px; top: 11px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #ffbe6b;
+  }
+  .parents b { font-weight: 800; color: var(--ink); }
+
+  .safety {
+    padding: 16px 18px;
+    background: #f2fbe9;
+    border: 2px solid #d6efc0;
+    border-radius: 18px;
+  }
+  .safety li::before { background: #7ec24a; }
+
+  .spec {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0 4px;
+  }
+  .spec span {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    padding: 5px 12px;
+    color: #7a5c2e;
+    background: #fff3d9;
+    border-radius: 999px;
+  }
+
+  .parents a { color: #c2712a; font-weight: 700; }
+
+  footer {
+    padding: 22px 24px calc(28px + env(safe-area-inset-bottom));
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.9;
+    color: #6f5c44;
+    background: rgba(255,255,255,.78);
+  }
+  footer a { color: #c2712a; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="sun" aria-hidden="true"></div>
+    <h1><span class="rb" aria-hidden="true"><svg viewBox="0 0 100 56" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke-width="6.6">
+        <path d="M4 52 A46 46 0 0 1 96 52" stroke="#ff6b6b"/>
+        <path d="M11 52 A39 39 0 0 1 89 52" stroke="#ffa64d"/>
+        <path d="M18 52 A32 32 0 0 1 82 52" stroke="#ffdd5c"/>
+        <path d="M25 52 A25 25 0 0 1 75 52" stroke="#7ed957"/>
+        <path d="M32 52 A18 18 0 0 1 68 52" stroke="#5cc8ff"/>
+        <path d="M39 52 A11 11 0 0 1 61 52" stroke="#b48cff"/>
+      </g>
+    </svg></span>あそぼ</h1>
+    <p class="sub">4さいからの、さわるだけのゲーム</p>
+  </header>
+
+  <!-- ゲームを増やすときは、この <a class="card"> を1つコピーして中身を差し替える -->
+  <main class="grid">
+    <a class="card card--tamago" href="https://kuuuu33.github.io/tamago/">
+      <div class="face" aria-hidden="true">🥚</div>
+      <div class="name">たまご わりわり</div>
+      <div class="go">▶ あそぶ</div>
+    </a>
+
+    <button class="card card--soon" type="button" id="soon">
+      <div class="face" aria-hidden="true">😴</div>
+      <div class="name">つぎは なにかな</div>
+    </button>
+  </main>
+</div>
+
+<section class="parents">
+  <div class="wrap" style="padding-top:0">
+    <h2>おうちのかたへ</h2>
+
+    <p>4歳の子どもが<b>ひとりで遊べる</b>ように作った、ブラウザゲームのページです。インストールもアカウント登録も不要で、開いたらすぐ遊べます。文字が読めなくても操作できるよう、説明文は画面に一切出していません。</p>
+
+    <h3>安全のこと</h3>
+    <div class="safety">
+      <ul>
+        <li><b>広告は表示されません。</b>課金もありません</li>
+        <li><b>個人情報を一切集めません。</b>名前・写真・年齢などを入力する場所がありません</li>
+        <li><b>データを外部に送信しません。</b>アクセス解析も入れていません</li>
+        <li>集めた記録は<b>お子さんの端末の中だけ</b>に保存されます（ブラウザのlocalStorage）</li>
+        <li>一度開けば<b>機内モードやオフラインでも遊べます</b></li>
+        <li>子どもが触れる画面から外部へ出るリンクはありません（このページの下部をのぞく）</li>
+      </ul>
+    </div>
+
+    <h3>たまご わりわり</h3>
+    <div class="spec">
+      <span>3〜5さい</span><span>1プレイ 約20秒</span><span>失敗なし</span><span>音が出ます</span>
+    </div>
+    <p>たまごを4回たたくと割れて、中から「なにか」が出てきます。ぬるぬるを指でこすって正体を出すと、名前を読み上げて図鑑に1匹たまります。23種類（うちレア3種）。</p>
+    <ul>
+      <li><b>時間制限もゲームオーバーもありません。</b>すべての操作に音とごほうびが返ります</li>
+      <li>こする作業は、<b>時間がかかるほど自動で判定が甘くなります</b>。指が不器用でも必ず終われます</li>
+      <li>動物の名前は音声で読み上げます（日本語の音声が入っている端末のみ。iPhone / iPad は標準で入っています）</li>
+    </ul>
+
+    <h3>快適に遊ぶために</h3>
+    <ul>
+      <li><b>ホーム画面に追加すると全画面になります。</b>Safariの共有ボタン →「ホーム画面に追加」。アドレスバーが消えて誤操作が減ります</li>
+      <li><b>音が出ます。</b>最初に画面を1回タップしたところから鳴りはじめます（ブラウザの仕様です）</li>
+      <li><b>勝手に他のアプリへ行かせたくないとき</b>は、iPhone / iPad の「アクセスガイド」が便利です。設定 → アクセシビリティ → アクセスガイド をオンにして、遊ぶ画面で電源ボタン3回押し</li>
+      <li>図鑑をリセットしたいときは、ゲーム画面右下の🧹を<b>2秒押しっぱなし</b>にしてください（子どもが誤って消さないように隠してあります）</li>
+    </ul>
+
+    <h3>作っている人</h3>
+    <p>くぅ（<a href="https://github.com/kuuuu33">GitHub: kuuuu33</a>）が、自分の子どものために作っています。ぜんぶClaudeと一緒に書きました。大人向けの制作物は <a href="https://kuuuu33.github.io/">Works</a> にまとめています。</p>
+  </div>
+</section>
+
+<footer>
+  Copyright (c) 2026 くぅ. All Rights Reserved.<br>
+  掲載作品の著作権は制作者に帰属します。無断での複製・改変・再配布を禁じます。
+</footer>
+
+<script>
+(() => {
+  "use strict";
+
+  // タップしたら必ず音が返る（4歳向けの原則）
+  let ac = null;
+  function blip(f0, f1, dur, wave) {
+    try {
+      const C = window.AudioContext || window.webkitAudioContext;
+      if (!C) return;
+      if (!ac) ac = new C();
+      if (ac.state === "suspended") ac.resume();
+      const t = ac.currentTime;
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.type = wave || "triangle";
+      o.frequency.setValueAtTime(f0, t);
+      if (f1) o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+      g.gain.setValueAtTime(.0001, t);
+      g.gain.exponentialRampToValueAtTime(.2, t + .012);
+      g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      o.connect(g); g.connect(ac.destination);
+      o.start(t); o.stop(t + dur + .05);
+    } catch (_) {}
+  }
+
+  document.querySelectorAll(".card").forEach((el) => {
+    el.addEventListener("pointerdown", () => {
+      if (el.classList.contains("card--soon")) {
+        // まだ無いカードも、押したら反応する（無反応にしない）
+        blip(300, 220, .18, "sine");
+        el.classList.remove("wig");
+        void el.offsetWidth;
+        el.classList.add("wig");
+      } else {
+        blip(660, 990, .16);
+        setTimeout(() => blip(990, 1320, .2), 90);
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
