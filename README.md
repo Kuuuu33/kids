@@ -13,6 +13,9 @@
 | | 作品 | 対象 | URL |
 |---|---|---|---|
 | 🥚 | たまご わりわり | 3〜5さい | https://kuuuu33.github.io/tamago/ （リポジトリ: [kuuuu33/tamago](https://github.com/kuuuu33/tamago)） |
+| 🧩 | どうぶつ パズル | 3〜5さい | https://kuuuu33.github.io/puzzle/ （リポジトリ: [kuuuu33/puzzle](https://github.com/kuuuu33/puzzle)） |
+
+ゲームどうしは `kuuuu33.github.io` の同一オリジンなので localStorage を共有できる。パズルは「たまご わりわり」で集めた動物を優先的に出題する。
 
 ## 設計方針
 

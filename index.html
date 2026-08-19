@@ -163,6 +163,7 @@
   .card:focus-visible { outline: 4px solid #ff9b3d; outline-offset: 4px; }
 
   .card--tamago { background: linear-gradient(170deg, #fffdf2 0%, #ffeec9 100%); }
+  .card--puzzle { background: linear-gradient(170deg, #f4fbff 0%, #d9eeff 100%); }
 
   .face {
     font-size: clamp(88px, 26vw, 150px);
@@ -177,9 +178,12 @@
   }
 
   .name {
-    font-size: clamp(24px, 7vw, 34px);
+    font-size: clamp(23px, 6.6vw, 32px);
     font-weight: 800;
     letter-spacing: .06em;
+    /* 日本語は既定だとどこでも折れる。空白のところだけで折る */
+    word-break: keep-all;
+    overflow-wrap: normal;
   }
 
   .go {
@@ -320,6 +324,12 @@
       <div class="go">▶ あそぶ</div>
     </a>
 
+    <a class="card card--puzzle" href="https://kuuuu33.github.io/puzzle/">
+      <div class="face" aria-hidden="true">🧩</div>
+      <div class="name">どうぶつ パズル</div>
+      <div class="go">▶ あそぶ</div>
+    </a>
+
     <button class="card card--soon" type="button" id="soon">
       <div class="face" aria-hidden="true">😴</div>
       <div class="name">つぎは なにかな</div>
@@ -356,12 +366,25 @@
       <li>動物の名前は音声で読み上げます（日本語の音声が入っている端末のみ。iPhone / iPad は標準で入っています）</li>
     </ul>
 
+    <h3>どうぶつ パズル</h3>
+    <div class="spec">
+      <span>3〜5さい</span><span>1プレイ 1〜3分</span><span>失敗なし</span><span>音が出ます</span>
+    </div>
+    <p>下に出てくるピースを、うすく見えている絵の上へ運ぶじぐそうパズルです。4ピースから始まり、クリアするたびに6→9→12と自動で増えていきます。難しさが下がることはありません。</p>
+    <ul>
+      <li>ドラッグは4歳にはまだ難しい操作なので、<b>吸い付く範囲をセルの78%まで広げて</b>あります。半分ズレていてもはまります</li>
+      <li><b>残り1枚になったら、画面のどこで指を離しても</b>必ずはまります。最後で詰まって終われないことがありません</li>
+      <li>違う場所に置いても、バツ印も失敗音も出ません。そっと下に戻るだけです</li>
+      <li><b>8秒さわらないでいると、次に置く場所が光って教えます</b></li>
+      <li>「たまご わりわり」で集めた動物が、優先的にパズルの絵になります</li>
+    </ul>
+
     <h3>快適に遊ぶために</h3>
     <ul>
       <li><b>ホーム画面に追加すると全画面になります。</b>Safariの共有ボタン →「ホーム画面に追加」。アドレスバーが消えて誤操作が減ります</li>
       <li><b>音が出ます。</b>最初に画面を1回タップしたところから鳴りはじめます（ブラウザの仕様です）</li>
       <li><b>勝手に他のアプリへ行かせたくないとき</b>は、iPhone / iPad の「アクセスガイド」が便利です。設定 → アクセシビリティ → アクセスガイド をオンにして、遊ぶ画面で電源ボタン3回押し</li>
-      <li>図鑑をリセットしたいときは、ゲーム画面右下の🧹を<b>2秒押しっぱなし</b>にしてください（子どもが誤って消さないように隠してあります）</li>
+      <li>図鑑やパズルの進み具合をリセットしたいときは、ゲーム画面右下の🧹を<b>2秒押しっぱなし</b>にしてください（子どもが誤って消さないように隠してあります）</li>
     </ul>
 
     <h3>作っている人</h3>
